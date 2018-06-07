@@ -1,0 +1,740 @@
+<?xml version="1.0" ?>
+
+<openerp>
+    <data>
+
+        <!-- le module contribuable -->
+                <!-- fin de la vue liste de contribuable -->
+                    <record model="ir.ui.view" id="contribuable_form"> 
+                        <field name="name">contribuable.form</field> 
+                        <field name="model">declaration.contribuable</field> 
+                        <field name="type">form</field> 
+                        <field name="arch" type="xml">
+                            <form string="Contribuable" >
+                              <group> 
+                                <group>
+                                    <field name="name_ids"/> 
+                                    <field name='sigle_ids'/> 
+                                    <field name="mail_ids"/>  
+                                    <field name='adresse_ids'/>
+                                    <field name='objet_ids'/>
+                                    <field name='contact_ids'/>
+                                    <field name='bp_ids'/>
+                                </group>
+                                <group>
+                                    <field name='imposition_ids'/>
+                                    <field name='codeetabl_ids'/>
+                                    <field name='rue_ids'/>
+                                    <field name='quartier_ids'/>
+                                    <field name='ncc_ids'/>
+                                </group>
+                               </group>
+                                
+                               
+                            </form>
+                        </field>
+                    </record>
+                <!-- fin de la vue form de contribuable -->
+                <!-- La vue liste de contribuable -->
+                    <record model="ir.ui.view" id="contribuable_tree">
+                        <field name="name">contribuable.tree</field>
+                        <field name="model">declaration.contribuable</field>
+                        <field name="type">tree</field> 
+                        <field name="arch" type="xml">
+                            <tree string="Contribuable" > 
+                                    
+                            </tree>
+                        </field>
+                    </record>
+                <!-- fin de la vue liste de contribuable -->
+
+                     <record model="ir.actions.act_window" id="action_contribuable"> 
+                        <field name="name">contribuable</field> 
+                        <field name="res_model">declaration.contribuable</field> 
+                        <field name="view_type">form</field> 
+                        <field name="view_mode">tree,form</field>
+                    </record>
+       <!-- fin dun module CONTRIBUABLE -->
+
+       <!-- debut du module CNPS -->
+            <!-- fin de la vue liste de CNPS -->
+                    <record model="ir.ui.view" id="cnps_form"> 
+                        <field name="name">cnps.form</field> 
+                        <field name="model">declaration.cnps</field> 
+                        <field name="type">form</field> 
+                        <field name="arch" type="xml">
+                            <form string="cnps" >
+                              <group> 
+                                <group>
+                                    <field name="sequencecnps"/> 
+                                    <field name='datecnps'/> 
+                                    <field name="periodicitecnps"/>  
+                                    <field name='servicecnps'/>
+                                    <field name='namecnps_id'/>
+                                    <field name='codeetablcnps_id'/>
+                                </group>
+                                <group>
+                                    
+                                </group>
+                               </group>
+                                
+                               
+                            </form>
+                        </field>
+                    </record>
+                <!-- fin de la vue form de cnps -->
+                <!-- La vue liste de cnps -->
+                    <record model="ir.ui.view" id="cnps_tree">
+                        <field name="name">cnps.tree</field>
+                        <field name="model">declaration.cnps</field>
+                        <field name="type">tree</field> 
+                        <field name="arch" type="xml">
+                            <tree string="Cnps" > 
+                                    
+                            </tree>
+                        </field>
+                    </record>
+                <!-- fin de la vue liste de cnps -->
+
+                     <record model="ir.actions.act_window" id="action_cnps"> 
+                        <field name="name">cnps</field> 
+                        <field name="res_model">declaration.cnps</field> 
+                        <field name="view_type">form</field> 
+                        <field name="view_mode">tree,form</field>
+                    </record>
+
+       <!-- fin du module CNPS -->
+
+
+       <!-- debut du module fdfp -->
+            <!-- fin de la vue liste de fdfp -->
+                    <record model="ir.ui.view" id="fdfp_form"> 
+                        <field name="name">fdfp.form</field> 
+                        <field name="model">declaration.fdfp</field> 
+                        <field name="type">form</field> 
+                        <field name="arch" type="xml">
+                            <form string="FDFP FROM" >
+                              <group> 
+                                <group>
+                                    <field name="sequencefdfp"/> 
+                                    <field name='datefdfp'/> 
+                                    <field name="periodicitefdfp"/>  
+                                    <field name='impositionfdfp_id'/>
+                                </group>
+                                <group>
+                                    <field name='servicefdfp'/>
+                                    <field name='nccfdfp_ids'/>
+                                </group>
+                               </group>
+                               <group>
+                                     <field name='effectifdessalairesfdfp'/>
+                               </group>
+                               <table width="100%" border="0">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> NATURE DES TAXES</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>REMUNERATIONS BRUTES TOTALES </b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>TAUX</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>MONTANT MENSUEL</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b>2.1- TAXE D'APPRENTISSAGE (TA)</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                               <field name='remunerationbttafdfp'/>
+                                            </td>
+                                            <td>
+                                                <field name='tauxtafdfp'/>
+                                            </td>
+                                             <td>
+                                               <field name='montantmensueltafdfp'/>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b>2.2- TAXE A LA FORMATION CONTINUE (TFC)</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <field name='remunerationbttfcfp'/>
+                                            </td>
+                                            <td>
+                                                <field name='tauxtfcfdfp'/>
+                                            </td>
+                                             <td>
+                                                <field name='montantmensueltfcfdfp'/>
+                                            </td>
+                                    </tr>
+                                </table>
+                                <field name= 'montantcumuletfcfdfp'/>
+                                <field name='statutregulationfdfp'/>
+                                <group>
+                                    <group>
+                                        <field name= 'massesalarialeafdfp'/>
+                                        <field name='montanttfcfdfp'/>
+                                        <field name= 'montantttfcpayer'/>
+                                        <field name='montanttaxefcfdfp'/>
+                                    </group>
+                                    <group>
+                                        <field name='engagementpfdfp'/>
+                                        <field name= 'versementaeffcfdfp'/>
+                                        <field name='montantapayerfdfp'/>
+                                    </group>
+                                </group>
+                               
+                            </form>
+                        </field>
+                    </record>
+                <!-- fin de la vue form de fdfp -->
+                <!-- La vue liste de fdfp -->
+                    <record model="ir.ui.view" id="fdfp_tree">
+                        <field name="name">fdfp.tree</field>
+                        <field name="model">declaration.fdfp</field>
+                        <field name="type">tree</field> 
+                        <field name="arch" type="xml">
+                            <tree string="FDFP TAB" > 
+                                    <field name="sequencefdfp"/> 
+                                    <field name='datefdfp'/> 
+                                    <field name="periodicitefdfp"/>  
+                                    <field name='servicefdfp'/>
+                                    <field name='effectifdessalairesfdfp'/>
+                                    <field name='montantmensueltafdfp'/>
+                                    <field name='montantmensueltfcfdfp'/>
+                                    <field name= 'versementaeffcfdfp'/>
+                                    <field name='montantapayerfdfp'/>
+                                </group>
+                            </tree>
+                        </field>
+                    </record>
+                <!-- fin de la vue liste de fdfp -->
+
+                     <record model="ir.actions.act_window" id="action_fdfp"> 
+                        <field name="name">fdfp</field> 
+                        <field name="res_model">declaration.fdfp</field> 
+                        <field name="view_type">form</field> 
+                        <field name="view_mode">tree,form</field>
+                    </record>
+
+       <!-- fin du module fdfp -->
+
+
+
+       <!-- debut du module ITS -->
+                <!-- la vue form de ITS -->
+                    <record model="ir.ui.view" id="its_form">
+                        <field name="name">its.form</field>
+                        <field name="model">declaration.its</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <form string="ITS" >
+
+                                <group> 
+                                    <group>
+                                        <field name="sequenceits"/>
+                                        <field name="dateits"/>
+                                        <field name='periodiciteits'/>
+                                        <field name="impositionits_id"/>
+                                    </group>
+                                    <group>
+                                        <field name='serviceits'/>
+                                        <field name='nccits_id'/>
+                                    </group> 
+                                </group>
+                                <group>
+                                    <string>
+                                        <b>01- Contribuable</b>
+                                    </string>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="sigleits_id"/>
+                                        <field name="objetits_id"/>
+                                        <field name='adresseits_id'/>
+                                        <field name="bpits_id"/>
+                                    </group>
+                                    <group>
+                                        <field name='contactits_id'/>
+                                        <field name='quartierits_id'/>
+                                        <field name='rueits_id'/>
+                                        <field name='mailits_id'/>
+                                    </group>
+                                </group>
+                                 <table width="100%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> N°</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>PENSIONS </b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant total versé</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Effectif</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant exoneré</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant taxable</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Abattement</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Revenu net imposable</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                                                               
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                                                                  
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                    </tr>
+                               </table>
+                            </form>
+                        </field>
+                    </record>
+                 <!-- fin de la form ITS -->
+                 <!-- vue liste de ITS -->
+                    <record model="ir.ui.view" id="its_tree">
+                        <field name="name">its.tree</field>
+                        <field name="model">declaration.its</field>
+                        <field name="type">tree</field>
+                        <field name="arch" type="xml">
+                            <tree string="Etat des taxes deductible" >
+                                 <field name="sequenceits"/>
+                                <field name="dateits"/>
+                                <field name='periodiciteits'/>
+                                <field name='serviceits'/>
+                                <field name='nccits_id'/>
+                                <field name="sigleits_id"/>
+                                <field name='mailits_id'/>
+                                <field name='impositionits_id'/>
+                                <field name='bpits_id'/>
+                                <field name='rueits_id'/>
+                                <field name='bpits_id'/>
+                                <field name='bpits_id'/>
+                                   
+
+                            </tree>
+                        </field>
+                    </record>
+            <!-- fin de la vue liste de ITS -->
+                    <record model="ir.actions.act_window" id="action_its">
+                        <field name="name">its</field>
+                        <field name="res_model">declaration.its</field>
+                        <field name="view_type">form</field>
+                        <field name="view_mode">tree,form</field>
+                    </record>
+        <!-- fin du mmodule ITS -->
+
+        <!-- debut du module TSE -->
+                <!-- fin de la vue liste de TSE -->
+                    <record model="ir.ui.view" id="tse_form"> 
+                        <field name="name">tse.form</field> 
+                        <field name="model">declaration.tse</field> 
+                        <field name="type">form</field> 
+                        <field name="arch" type="xml">
+                            <form string="TSE FORM" >
+                              <group> 
+                                <group>
+                                    <field name='sequencetse'/> 
+                                    <field name='datetse'/> 
+                                    <field name='periodicitetse'/>  
+                                    <field name='impositiontse_id'/>
+                                </group>
+                                <group>
+                                    <field name='servicetse'/>
+                                    <field name='ncctse_id'/>
+                                </group>
+                                <group>
+                                    <field name='chiffreathttse_id'/>
+                                    <field name='operationexadtse'/>
+                                    <field name='livraisontse'/>
+                                </group>
+                                <group>
+                                    <field name='chiffreaftaxtse'/>
+                                    <field name='tauxtse'/>
+                                    <field name='montanttaxetse'/>
+                                    <field name= 'regulationtse'/>
+                                </group>
+                                <group>
+                                    <field name='montantapayetse'/>
+                                    <field name='montantareportertse'/>
+                                </group>
+                               </group>
+
+                            </form>
+                        </field>
+                    </record>
+                <!-- fin de la vue form de TSE -->
+                <!-- La vue liste de TSE -->
+                    <record model="ir.ui.view" id="tse_tree">
+                        <field name="name">tse.tree</field>
+                        <field name="model">declaration.tse</field>
+                        <field name="type">tree</field> 
+                        <field name="arch" type="xml">
+                            <tree string="TSE TAB" > 
+                                <field name='sequencetse'/> 
+                                <field name='datetse'/> 
+                                <field name='periodicitetse'/>
+                                <field name='servicetse'/>
+                                <field name='chiffreaftaxtse'/>
+                                <field name='montantapayetse'/>
+                                <field name='montantareportertse'/>
+                                    
+                            </tree>
+                        </field>
+                    </record>
+            <!-- fin de la vue liste de TSE -->
+                     <record model="ir.actions.act_window" id="action_its">
+                        <field name="name">tse</field>
+                        <field name="res_model">declaration.tse</field>
+                        <field name="view_type">form</field>
+                        <field name="view_mode">tree,form</field>
+                    </record>
+         <!-- fin du module TSE -->
+
+         <!--debut du module tva -->
+                <!-- fin de la vue liste de tva -->
+                    <record model="ir.ui.view" id="tva_form"> 
+                        <field name="name">tva.form</field> 
+                        <field name="model">declaration.tva</field> 
+                        <field name="type">form</field> 
+                        <field name="arch" type="xml">
+                            <form string="TVA FORM  " >
+                              <group> 
+                                <group>
+                                    <field name='sequencetva'/> 
+                                    <field name='datetva'/> 
+                                    <field name='periodicitetva'/>  
+                                    <field name='impositiontva_id'/>
+                                </group>
+                                <group>
+                                    <field name='servicetva'/>
+                                    <field name='ncctva_id'/>
+                                </group>
+                                <string>01- OPERATIONS REALISEES</string>
+                                <group>
+                                    <field name='chiffreathttva_ids'/>
+                                    <field name='operationexadtva_id'/>
+                                    <field name='livraisontva'/>
+                                </group>
+                                <group>
+                                    <field name='chiffreaftaxtva'/>
+                                    <field name='exportationadtva'/>
+                                    <field name='operationexletva'/>
+                                    <field name= 'operationexconvtva'/>
+                                     <field name='autreopetva'/>
+                                </group>
+                                <group>
+                                    <field name='differencetva'/>
+                                    <field name='livraisontva_ids'/>
+                                     <field name='chiffreataxhttva'/>
+                                </group>
+                               </group>
+                               <string>02- TVA BRUTE</string>
+                               <table width="100%" border="0">
+                                    <tr>
+                                        <td>
+                                            <string>
+                                                <b>Chiffre d'affaires taxable HT</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Taux</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>MONTANTS</b>
+                                            </string>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <field name="chiffreataxhttvabrutea"/>
+                                        </td>
+                                        <td>
+                                            <field name="tauxtvabrutea"/>
+                                        </td>
+                                        <td>
+                                           <field name="montannttvabrutea"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <field name="chiffreataxhttvabruteb"/>
+                                        </td>
+                                        <td>
+                                            <field name="tauxtvabruteb"/>
+                                        </td>
+                                        <td>
+                                           <field name="montannttvabruteb"/>
+                                        </td>
+                                    </tr>
+                               </table>
+                               <string>03-REGULARISATION TVA</string>
+                               <group>
+                                 <group>
+                                        <field name="anterieuradeduitereserve"/>
+                                 </group>
+                                  <group>
+                                        <field name="etatdestaxesduductibledumoi"/>
+                                        <field name="creditdumoisprecedant"/>
+                                        <field name="etatsdestaxesdeductibles"/>
+                                        <field name="totaldeduction"/>
+                                 </group>
+                                  <group>
+                                        <field name="totaltvabrute"/>
+                                        <field name="tvanetapayer"/>
+                                        <field name="creditareporter"/>
+                                        <field name="creditdemandearembourse"/>
+                                 </group>
+                               </group>
+
+                            </form>
+                        </field>
+                    </record>
+                <!-- fin de la vue form de tva -->
+                <!-- La vue liste de tva -->
+                    <record model="ir.ui.view" id="tva_tree">
+                        <field name="name">tva.tree</field>
+                        <field name="model">declaration.tva</field>
+                        <field name="type">tree</field> 
+                        <field name="arch" type="xml">
+                            <tree string="TVA TAB" > 
+                                <field name='sequencetva'/> 
+                                <field name='datetva'/> 
+                                <field name='periodicitetva'/>
+                                <field name='servicetva'/>
+                                <field name='chiffreaftaxtva'/>
+                                <field name='totaltvabrute'/>
+                                <feld name='totaldeduction'/>
+                                <field name='tvanetapayer'/> 
+                                <field name='creditareporter'/>
+                                    
+                            </tree>
+                        </field>
+                    </record>
+            <!-- fin de la vue liste de tva -->
+                     <record model="ir.actions.act_window" id="action_its">
+                        <field name="name">tva</field>
+                        <field name="res_model">declaration.tva</field>
+                        <field name="view_type">form</field>
+                        <field name="view_mode">tree,form</field>
+                    </record>
+         <!-- fin du module tva -->
+
+         <!-- debut du module etat -->
+            <!-- fin de la vue liste de etat -->
+                    <record model="ir.ui.view" id="etat_form"> 
+                        <field name="name">etat.form</field> 
+                        <field name="model">declaration.etat</field> 
+                        <field name="type">form</field> 
+                        <field name="arch" type="xml">
+                            <form string="etat des taxes deductibles" >
+                              <group> 
+                                <group>
+                                    <field name="sequenceetat"/> 
+                                    <field name='dateetat'/> 
+                                    <field name="periodiciteetat"/>  
+                                    <field name='impositionetat_id'/>
+                                </group>
+                                <group>
+                                    <field name='serviceetat'/>
+                                    <field name='nccetat_id'/>
+                                </group>
+                                <group>
+                            
+                                </group>
+                                <group>
+                                    <field name='totaletat'/>
+                                </group>
+                               </group>
+                               <table width="100%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> Date de la facture ou de l'importation</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b> FOURNISSEUR NOM ET PRENOMS</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b> FOURNISSEUR N° C. C.</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b> REFERENCE DE LA FACTURE OU N° DE LA DECLARATION ET DE LA LIQUIDATION EN DOUANE</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b> NATURE DES BIENS OU SERVICES (ouvrant droit à déduction)</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>MONTANT TOTAL</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b> MONTANT DE LA TAXE</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>PRORATA DE DEDUCTION</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b> MONTANT DE LA TAXE DEDUCTIBLE</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                            <field name="datefactetat"/>
+                                        </td>
+                                        <td>
+                                            <field name="fournisseurnccetat"/>
+                                        </td>
+                                        <td>
+                                            <field name='referencefactetat'/> 
+                                        
+                                        </td>
+                                        <td>
+                                            <field name="fournisseurnpetat"/>
+                                        </td>
+                                        <td>
+                                             <field name="naturebienetat"/>
+                                        </td>
+                                        <td>
+                                            <field name='montantttetat'/>
+                                        </td>
+                                        <td>
+                                            <field name='montanttaxetat'/>
+                                        </td>
+                                        <td>
+                                            <field name='prorataetat'/>
+                                        </td>
+                                        <td>
+                                            <field name='montanttdetat'/>
+
+                                        </td>
+                                    </tr>
+                               </table>
+                           </form>
+                        </field>
+                    </record>
+                <!-- fin de la vue form de etat -->
+                <!-- La vue liste de etat -->
+                    <record model="ir.ui.view" id="etat_tree">
+                        <field name="name">etat.tree</field>
+                        <field name="model">declaration.etat</field>
+                        <field name="type">tree</field> 
+                        <field name="arch" type="xml">
+                            <tree string="etat des taxes deductibles" > 
+                                 <field name="sequenceetat"/> 
+                                 <field name='dateetat'/> 
+                                 <field name="periodiciteetat"/>
+                                 <field name='serviceetat'/>
+                                  <field name='totaletat'/>
+                                    
+                            </tree>
+                        </field>
+                    </record>
+                <!-- fin de la vue liste de etat -->
+
+                     <record model="ir.actions.act_window" id="action_etat"> 
+                        <field name="name">etat</field> 
+                        <field name="res_model">declaration.etat</field> 
+                        <field name="view_type">form</field> 
+                        <field name="view_mode">tree,form</field>
+                    </record>
+
+       <!-- fin du module etat -->
+
+
+        <menuitem id="declaration" name="declaration_ci"/>
+           <menuitem name="declaration_ci" id="section_main_menu_declaration" parent="declaration"/>
+            <menuitem name="contribuables" id="choix_contribuable" parent="section_main_menu_declaration" action="action_contribuable"/>
+            <menuitem name="cnps" id="choix_cnps" parent="section_main_menu_declaration" action="action_cnps"/>
+            <menuitem name="its" id="choix_its" parent="section_main_menu_declaration" action="action_its"/>
+            <menuitem name="tse" id="choix_tse" parent="section_main_menu_declaration" action="action_tse"/>
+            <menuitem name="tva" id="choix_tva" parent="section_main_menu_declaration" action="action_tva"/>
+            <menuitem name="etat" id="choix_etat" parent="section_main_menu_declaration" action="action_etat"/>
+
+    </data>
+</openerp>
