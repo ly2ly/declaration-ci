@@ -3,59 +3,6 @@
 <openerp>
     <data>
 
-        <!-- le module contribuable -->
-                <!-- fin de la vue liste de contribuable -->
-                    <record model="ir.ui.view" id="contribuable_form"> 
-                        <field name="name">contribuable.form</field> 
-                        <field name="model">declaration.contribuable</field> 
-                        <field name="type">form</field> 
-                        <field name="arch" type="xml">
-                            <form string="Contribuable" >
-                              <group> 
-                                <group>
-                                    <field name="name_ids"/> 
-                                    <field name='sigle_ids'/> 
-                                    <field name="mail_ids"/>  
-                                    <field name='adresse_ids'/>
-                                    <field name='objet_ids'/>
-                                    <field name='contact_ids'/>
-                                    <field name='bp_ids'/>
-                                </group>
-                                <group>
-                                    <field name='imposition_ids'/>
-                                    <field name='codeetabl_ids'/>
-                                    <field name='rue_ids'/>
-                                    <field name='quartier_ids'/>
-                                    <field name='ncc_ids'/>
-                                </group>
-                               </group>
-                                
-                               
-                            </form>
-                        </field>
-                    </record>
-                <!-- fin de la vue form de contribuable -->
-                <!-- La vue liste de contribuable -->
-                    <record model="ir.ui.view" id="contribuable_tree">
-                        <field name="name">contribuable.tree</field>
-                        <field name="model">declaration.contribuable</field>
-                        <field name="type">tree</field> 
-                        <field name="arch" type="xml">
-                            <tree string="Contribuable" > 
-                                    
-                            </tree>
-                        </field>
-                    </record>
-                <!-- fin de la vue liste de contribuable -->
-
-                     <record model="ir.actions.act_window" id="action_contribuable"> 
-                        <field name="name">contribuable</field> 
-                        <field name="res_model">declaration.contribuable</field> 
-                        <field name="view_type">form</field> 
-                        <field name="view_mode">tree,form</field>
-                    </record>
-       <!-- fin dun module CONTRIBUABLE -->
-
        <!-- debut du module CNPS -->
             <!-- fin de la vue liste de CNPS -->
                     <record model="ir.ui.view" id="cnps_form"> 
@@ -63,23 +10,188 @@
                         <field name="model">declaration.cnps</field> 
                         <field name="type">form</field> 
                         <field name="arch" type="xml">
-                            <form string="cnps" >
-                              <group> 
-                                <group>
-                                    <field name="sequencecnps"/> 
-                                    <field name='datecnps'/> 
-                                    <field name="periodicitecnps"/>  
+                            <form string="CNPS FORM"  > 
+                            <group>
+                                <group >
+                                    <field name='sequencecnps'/>  
+                                    <field name='datecnps'/>  
+                                    <field name='periodicitecnps'/>
+                                    <field name='impositioncnps_id'/>
+                                    <field name='namecnps_ids'/>
+                                    <field name='bpcnps_id'/>
+                                    <field name='telcnps_id'/>
+                                </group>
+                                <group >
                                     <field name='servicecnps'/>
-                                    <field name='namecnps_id'/>
+                                    <field name='ncccnps_ids'/>
                                     <field name='codeetablcnps_id'/>
-                                </group>
+                                    <field name='codeactivcnps_id'/>
+                                    <field name='employeur'/>
+                                </group> 
+                            </group>
+                                <string><b>TOTAL SALAIRES BRUTS PAYES AU COURS DE LA PERIODE</b></string>
                                 <group>
-                                    
+                                    <field name="mois"/>
                                 </group>
+                                <table border="1" width="100%">
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>CATEGORIE DE SALAIRES</b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>NOMBRE DE SALAIRES</b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>REGIME DE RETRAITE</b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>REGIMES DES PREST. FAMIL ET DES ACCID. DU TRAVAIL</b></string>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Horaires journaliers et occasionnels inférieurs ou égaux à 3231 F jour"</b></string>
+                                        </td>
+                                        <td><field name="hjoi3231jours1"/></td>
+                                        <td><field name="hjoi3231jours2"/></td>
+                                        <td><field name="hjoi3231jours3"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Horaires journaliers et occasionnels supérieurs ou égaux à 3231 F jour</b></string>
+                                        </td>
+                                        <td><field name="hjos3231jours1"/></td>
+                                        <td><field name="hjos3231jours2"/></td>
+                                        <td><field name="hjos3231jours3"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Mensuels inférieurs ou égaux à 70.000 f par mois</b></string>
+                                        </td>
+                                        <td><field name="mi70000mois1"/></td>
+                                        <td><field name="mi70000mois2"/></td>
+                                        <td><field name="mi70000mois3"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Mensuels supérieurs à 70.000 F. par mois et inférieurs ou égaux à 1.647.315 F. par mois</b></string>
+                                        </td>
+                                        <td><field name="ms70000mois1"/></td>
+                                        <td><field name="ms70000mois2"/></td>
+                                        <td><field name="ms70000mois3"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Mensuels supérieurs à 1.647.315 F. par mois</b></string>
+                                        </td>
+                                        <td><field name="ms1647315mois1"/></td>
+                                        <td><field name="ms1647315mois2"/></td>
+                                        <td><field name="ms1647315mois3"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>TOTAL</b></string>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                </table><br/>
+                                <group>
+                                    <field name='csbsactrr'/>
+                                    <field name='csbsctrpf'/>
                                </group>
-                                
-                               
-                            </form>
+                                <group>
+                                    <field name="mois"/>
+                                </group>
+                                <table border="1" width="100%">
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b></b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>Nombre</b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>Salaires bruts</b></string>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Personnes ne cotisant pas au Regime de Retraite</b></string>
+                                        </td>
+                                        <td>
+                                            <field name="pcprr1" />
+                                        </td>
+                                        <td>
+                                            <field name="pcprr2" />
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Personnes pour qui l'employeur ne cotise pas</b></string>
+                                        </td>
+                                        <td>
+                                            <field name="ppqecp1" />
+                                        </td>
+                                        <td>
+                                            <field name="ppqecp2" />
+                                        </td>
+                                        
+                                    </tr>
+                                </table>
+                                 <br/><br/>
+                                <string><b>
+                                DECOMPTES DES COTISATIONS DUES 
+                                </b></string>
+                                 <table border="1" width="100%">
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>RUBRIQUES</b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>SALAIRE SOUMIS A COTISATIONS</b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>TAUX</b></string>
+                                        </td>
+                                        <td>
+                                            <string position="center"><b>MONTANT (Francs CFA)</b></string>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Prestations Familiales</b></string>
+                                        </td>
+                                        <td><field name='pf1'/></td>
+                                        <td><field name='pf2'/></td>
+                                        <td><field name='pf3'/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Accident du Travail</b></string>
+                                        </td>
+                                        <td><field name='at1'/></td>
+                                        <td><field name='at2'/></td>
+                                        <td><field name='at3'/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <string position="center"><b>Régime de Retraite</b></string>
+                                        </td>
+                                        <td><field name='rr1'/></td>
+                                        <td><field name='rr2'/></td>
+                                        <td><field name='rr3'/></td>
+                                    </tr>
+                                </table>
+                               <group>
+                                    <field name='tcap'/>
+                                    <br/>
+                                    <br/>
+                               </group>
+                    </form>
                         </field>
                     </record>
                 <!-- fin de la vue form de cnps -->
@@ -89,8 +201,16 @@
                         <field name="model">declaration.cnps</field>
                         <field name="type">tree</field> 
                         <field name="arch" type="xml">
-                            <tree string="Cnps" > 
-                                    
+                            <tree string="CNPS TAB"  > 
+                                     <field name='sequencecnps'/>  
+                                     <field name='datecnps'/>  
+                                     <field name='periodicitecnps'/>
+                                     <field name='csbsactrr'/>
+                                     <field name='csbsctrpf'/>
+                                     <field name='pf3'/>
+                                     <field name='at3'/>
+                                     <field name='rr3'/>
+                                     <field name='tcap'/>
                             </tree>
                         </field>
                     </record>
@@ -106,14 +226,14 @@
        <!-- fin du module CNPS -->
 
 
-       <!-- debut du module fdfp -->
-            <!-- fin de la vue liste de fdfp -->
+       <!-- debut du module FDFP -->
+            <!-- fin de la vue liste de FDFP -->
                     <record model="ir.ui.view" id="fdfp_form"> 
                         <field name="name">fdfp.form</field> 
                         <field name="model">declaration.fdfp</field> 
                         <field name="type">form</field> 
                         <field name="arch" type="xml">
-                            <form string="FDFP FROM" >
+                            <form string="DECLARATION FDFP : Form"   >
                               <group> 
                                 <group>
                                     <field name="sequencefdfp"/> 
@@ -129,6 +249,10 @@
                                <group>
                                      <field name='effectifdessalairesfdfp'/>
                                </group>
+                               <br/><br/>
+                               <string><b>02 – DETERMINATION DES TAXES</b></string>
+                               <br/><br/>
+
                                <table width="100%" border="0">
                                     <tr>
                                             <td>
@@ -185,8 +309,11 @@
                                             </td>
                                     </tr>
                                 </table>
-                                <field name= 'montantcumuletfcfdfp'/>
-                                <field name='statutregulationfdfp'/>
+                                <br/><br/>
+                                <group>
+                                    <field name= 'montantcumuletfcfdfp'/>
+                                    <field name='statutregulationfdfp'/>
+                                </group>
                                 <group>
                                     <group>
                                         <field name= 'massesalarialeafdfp'/>
@@ -196,7 +323,7 @@
                                     </group>
                                     <group>
                                         <field name='engagementpfdfp'/>
-                                        <field name= 'versementaeffcfdfp'/>
+                                        <field name= 'versementaeffcfdfp'/><br/><br/>
                                         <field name='montantapayerfdfp'/>
                                     </group>
                                 </group>
@@ -204,14 +331,14 @@
                             </form>
                         </field>
                     </record>
-                <!-- fin de la vue form de fdfp -->
-                <!-- La vue liste de fdfp -->
+                <!-- fin de la vue form de FDFP -->
+                <!-- La vue liste de FDFP -->
                     <record model="ir.ui.view" id="fdfp_tree">
                         <field name="name">fdfp.tree</field>
                         <field name="model">declaration.fdfp</field>
                         <field name="type">tree</field> 
                         <field name="arch" type="xml">
-                            <tree string="FDFP TAB" > 
+                            <tree string="DECLARATION FDFP : Tab"  > 
                                     <field name="sequencefdfp"/> 
                                     <field name='datefdfp'/> 
                                     <field name="periodicitefdfp"/>  
@@ -221,11 +348,10 @@
                                     <field name='montantmensueltfcfdfp'/>
                                     <field name= 'versementaeffcfdfp'/>
                                     <field name='montantapayerfdfp'/>
-                                </group>
                             </tree>
                         </field>
                     </record>
-                <!-- fin de la vue liste de fdfp -->
+                <!-- fin de la vue liste de FDFP -->
 
                      <record model="ir.actions.act_window" id="action_fdfp"> 
                         <field name="name">fdfp</field> 
@@ -234,9 +360,7 @@
                         <field name="view_mode">tree,form</field>
                     </record>
 
-       <!-- fin du module fdfp -->
-
-
+       <!-- fin du module FDFP -->
 
        <!-- debut du module ITS -->
                 <!-- la vue form de ITS -->
@@ -245,7 +369,7 @@
                         <field name="model">declaration.its</field>
                         <field name="type">form</field>
                         <field name="arch" type="xml">
-                            <form string="ITS" >
+                            <form string="DECLARATION ITS : Form"  >
 
                                 <group> 
                                     <group>
@@ -278,6 +402,8 @@
                                         <field name='mailits_id'/>
                                     </group>
                                 </group>
+                                <br/><br/>
+                                <string><b>02 -  DETERMINATION DE L’ASSIETTE</b></string>
                                  <table width="100%" border="1">
                                     <tr>
                                             <td>
@@ -323,10 +449,15 @@
                                     </tr>
                                     <tr>
                                         <td> 
-                                                                               
+                                              <string>
+                                                    <b>1</b>
+                                                </string>                                  
                                         </td>
                                         <td>
-                                            
+                                            <string>
+                                                <b>Pensions ≤ 300.000 FCFA/mois</b>
+                                            </string>
+
                                         </td>
                                         <td>
                                             
@@ -341,7 +472,41 @@
                                         <td>
                                         
                                         </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
                                         
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>2</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Pensions > 300.000 FCFA</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            
+                                        
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                                                                  
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
                                         <td>
 
                                         </td>
@@ -353,6 +518,348 @@
                                         </td>
                                     </tr>
                                </table>
+                            <br/><br/>
+
+                                <table width="100%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> N°</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>RENTES VIAGERES</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant total versé</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Effectif</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant exoneré</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant taxable</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Abattement</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Revenu net imposable</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>3</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Pensions ≤ 300.000 FCFA/mois</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            
+                                        
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                                                                  
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>4</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Pensions > 300.000 FCFA</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            
+                                        
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                                                                  
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                    </tr>
+                               </table>
+                               <group>
+                                   <group>
+                                        <table width="50%" border="1">
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>N°</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Revenus bruts </b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Montant brut</b>
+                                                    </string>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>5</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Rémunérations versées</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>6</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Avantages en nature (évaluation)</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>7</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Autres (à préciser)</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>8</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Montant total brut </b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                   </group>
+                                   <group>
+                                    <table width="50%" border="1">
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>N°</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Revenus non imposables</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>ITS</b>
+                                                    </string>
+                                                </td>
+                                                 <td>
+                                                    <string>
+                                                        <b>Contribution Employeur</b>
+                                                    </string>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>9</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Montant des salaires (inférieurs au minimum) 2 non déclaré ou non imposé</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                                 <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>10</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Indemnités non imposables</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                                 <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>11</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Revenu total brut imposable</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                                 <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>12</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Revenu net imposable</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                                 <td>
+                                                    
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                   </group>
+                               </group>
+                                        <table width="75%" border="1">
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>N°</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>Revenus non imposables</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>ITS</b>
+                                                    </string>
+                                                </td>
+                                                 <td>
+                                                    <string>
+                                                        <b>Contribution Employeur</b>
+                                                    </string>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <string>
+                                                        <b>13</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    <string>
+                                                        <b>TOTAL MONTANT NET IMPOSABLE</b>
+                                                    </string>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                                 <td>
+                                                    
+                                                </td>
+                                            </tr>
+
+                                        </table>
                             </form>
                         </field>
                     </record>
@@ -363,7 +870,7 @@
                         <field name="model">declaration.its</field>
                         <field name="type">tree</field>
                         <field name="arch" type="xml">
-                            <tree string="Etat des taxes deductible" >
+                            <tree string="DECLARATION ITS : Tab"  >
                                  <field name="sequenceits"/>
                                 <field name="dateits"/>
                                 <field name='periodiciteits'/>
@@ -376,8 +883,6 @@
                                 <field name='rueits_id'/>
                                 <field name='bpits_id'/>
                                 <field name='bpits_id'/>
-                                   
-
                             </tree>
                         </field>
                     </record>
@@ -394,10 +899,10 @@
                 <!-- fin de la vue liste de TSE -->
                     <record model="ir.ui.view" id="tse_form"> 
                         <field name="name">tse.form</field> 
-                        <field name="model">declaration.tse</field> 
+                        <field name="model">declaration.tse</field>  
                         <field name="type">form</field> 
                         <field name="arch" type="xml">
-                            <form string="TSE FORM" >
+                            <form string="DECLARATION TSE : Form"  >
                               <group> 
                                 <group>
                                     <field name='sequencetse'/> 
@@ -412,7 +917,7 @@
                                 <group>
                                     <field name='chiffreathttse_id'/>
                                     <field name='operationexadtse'/>
-                                    <field name='livraisontse'/>
+                                    <field name='livraisontse_id'/>
                                 </group>
                                 <group>
                                     <field name='chiffreaftaxtse'/>
@@ -436,7 +941,7 @@
                         <field name="model">declaration.tse</field>
                         <field name="type">tree</field> 
                         <field name="arch" type="xml">
-                            <tree string="TSE TAB" > 
+                            <tree string="DECLARATION TSE : Tab"  > 
                                 <field name='sequencetse'/> 
                                 <field name='datetse'/> 
                                 <field name='periodicitetse'/>
@@ -449,7 +954,7 @@
                         </field>
                     </record>
             <!-- fin de la vue liste de TSE -->
-                     <record model="ir.actions.act_window" id="action_its">
+                     <record model="ir.actions.act_window" id="action_tse">
                         <field name="name">tse</field>
                         <field name="res_model">declaration.tse</field>
                         <field name="view_type">form</field>
@@ -464,7 +969,7 @@
                         <field name="model">declaration.tva</field> 
                         <field name="type">form</field> 
                         <field name="arch" type="xml">
-                            <form string="TVA FORM  " >
+                            <form string="DECLARATION TVA : Form"  >
                               <group> 
                                 <group>
                                     <field name='sequencetva'/> 
@@ -478,12 +983,7 @@
                                 </group>
                                 <string>01- OPERATIONS REALISEES</string>
                                 <group>
-                                    <field name='chiffreathttva_ids'/>
-                                    <field name='operationexadtva_id'/>
-                                    <field name='livraisontva'/>
-                                </group>
-                                <group>
-                                    <field name='chiffreaftaxtva'/>
+                                    <field name='chiffreathttva'/>
                                     <field name='exportationadtva'/>
                                     <field name='operationexletva'/>
                                     <field name= 'operationexconvtva'/>
@@ -491,7 +991,7 @@
                                 </group>
                                 <group>
                                     <field name='differencetva'/>
-                                    <field name='livraisontva_ids'/>
+                                    <field name='livraisontva'/>
                                      <field name='chiffreataxhttva'/>
                                 </group>
                                </group>
@@ -561,27 +1061,27 @@
                     </record>
                 <!-- fin de la vue form de tva -->
                 <!-- La vue liste de tva -->
+
                     <record model="ir.ui.view" id="tva_tree">
                         <field name="name">tva.tree</field>
                         <field name="model">declaration.tva</field>
                         <field name="type">tree</field> 
                         <field name="arch" type="xml">
-                            <tree string="TVA TAB" > 
-                                <field name='sequencetva'/> 
-                                <field name='datetva'/> 
-                                <field name='periodicitetva'/>
-                                <field name='servicetva'/>
-                                <field name='chiffreaftaxtva'/>
-                                <field name='totaltvabrute'/>
-                                <feld name='totaldeduction'/>
-                                <field name='tvanetapayer'/> 
-                                <field name='creditareporter'/>
-                                    
+                            <tree string="DECLARATION TVA : Tab" >
+                                <field name='sequencetva' /> 
+                                <field name='datetva' /> 
+                                <field name='periodicitetva' />
+                                <field name='servicetva' />
+                                <field name='chiffreathttva' />
+                                <field name='totaltvabrute' />
+                                <field name='totaldeduction' />
+                                <field name='tvanetapayer' /> 
+                                <field name='creditareporter' />
                             </tree>
                         </field>
                     </record>
             <!-- fin de la vue liste de tva -->
-                     <record model="ir.actions.act_window" id="action_its">
+                     <record model="ir.actions.act_window" id="action_tva">
                         <field name="name">tva</field>
                         <field name="res_model">declaration.tva</field>
                         <field name="view_type">form</field>
@@ -590,13 +1090,13 @@
          <!-- fin du module tva -->
 
          <!-- debut du module etat -->
-            <!-- fin de la vue liste de etat -->
+            <!-- debut du formulaire  etat -->
                     <record model="ir.ui.view" id="etat_form"> 
                         <field name="name">etat.form</field> 
                         <field name="model">declaration.etat</field> 
                         <field name="type">form</field> 
                         <field name="arch" type="xml">
-                            <form string="etat des taxes deductibles" >
+                            <form string=" FORM ETAT DES TAXES DEDUCTIBLES"  >
                               <group> 
                                 <group>
                                     <field name="sequenceetat"/> 
@@ -705,7 +1205,7 @@
                         <field name="model">declaration.etat</field>
                         <field name="type">tree</field> 
                         <field name="arch" type="xml">
-                            <tree string="etat des taxes deductibles" > 
+                            <tree string="TAB ETATS DES TAXES DEDUCTIBLES"  > 
                                  <field name="sequenceetat"/> 
                                  <field name='dateetat'/> 
                                  <field name="periodiciteetat"/>
@@ -728,9 +1228,9 @@
 
 
         <menuitem id="declaration" name="declaration_ci"/>
-           <menuitem name="declaration_ci" id="section_main_menu_declaration" parent="declaration"/>
-            <menuitem name="contribuables" id="choix_contribuable" parent="section_main_menu_declaration" action="action_contribuable"/>
+           <menuitem name="declaration_ci" id="section_main_menu_declaration" parent="declaration" sequence=""/>
             <menuitem name="cnps" id="choix_cnps" parent="section_main_menu_declaration" action="action_cnps"/>
+             <menuitem name="fdfp" id="choix_fdfp" parent="section_main_menu_declaration" action="action_fdfp"/>
             <menuitem name="its" id="choix_its" parent="section_main_menu_declaration" action="action_its"/>
             <menuitem name="tse" id="choix_tse" parent="section_main_menu_declaration" action="action_tse"/>
             <menuitem name="tva" id="choix_tva" parent="section_main_menu_declaration" action="action_tva"/>
