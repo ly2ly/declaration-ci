@@ -3,8 +3,37 @@
 <openerp>
     <data>
 
-       <!-- debut du module CNPS -->
-            <!-- fin de la vue liste de CNPS -->
+        <!-- debut du module contribuable -->
+           <!-- debut de la form contribuable -->
+                    <record model="ir.ui.view" id="contribuable_form"> 
+                        <field name="name">contribuable.form</field> 
+                        <field name="model">res.company</field> 
+                        <field name="type">form</field> 
+                        <field name="inherit_id" ref="base.view_company_form" />
+                        <field name="arch" type="xml">
+                            <xpath expr="//field[@name='website']" position="after">
+                                <br/><br/>
+                                <field name="sigle" />
+                                <field name="codeetab" />
+                                <field name="codeact" />
+                                <field name="employeur" />
+
+                            </xpath>
+                            <xpath expr="//field[@name='company_registry']" position="after">
+                                <br/><br/>
+                                <field name='objet'/>
+                                <field name='service'/>
+                                <field name='quartier'/>
+                            </xpath>
+                        </field>
+                    </record>
+
+                    
+            <!-- fin de la form contribuable -->
+
+        <!-- fin du  module contribuable -->
+
+       <!-- debut de la vue liste de CNPS -->
                     <record model="ir.ui.view" id="cnps_form"> 
                         <field name="name">cnps.form</field> 
                         <field name="model">declaration.cnps</field> 
@@ -52,7 +81,7 @@
                                         <td>
                                             <string position="center"><b>Horaires journaliers et occasionnels inférieurs ou égaux à 3231 F jour"</b></string>
                                         </td>
-                                        <td><field name="hjoi3231jours1"/></td>
+                                        <td><field name="hjoi3231jours1" on_change="salaireotal"/></td>
                                         <td><field name="hjoi3231jours2"/></td>
                                         <td><field name="hjoi3231jours3"/></td>
                                     </tr>
@@ -60,7 +89,7 @@
                                         <td>
                                             <string position="center"><b>Horaires journaliers et occasionnels supérieurs ou égaux à 3231 F jour</b></string>
                                         </td>
-                                        <td><field name="hjos3231jours1"/></td>
+                                        <td><field name="hjos3231jours1" on_change="salaireotal"/></td>
                                         <td><field name="hjos3231jours2"/></td>
                                         <td><field name="hjos3231jours3"/></td>
                                     </tr>
@@ -68,7 +97,7 @@
                                         <td>
                                             <string position="center"><b>Mensuels inférieurs ou égaux à 70.000 f par mois</b></string>
                                         </td>
-                                        <td><field name="mi70000mois1"/></td>
+                                        <td><field name="mi70000mois1" on_change="salaireotal"/></td>
                                         <td><field name="mi70000mois2"/></td>
                                         <td><field name="mi70000mois3"/></td>
                                     </tr>
@@ -76,7 +105,7 @@
                                         <td>
                                             <string position="center"><b>Mensuels supérieurs à 70.000 F. par mois et inférieurs ou égaux à 1.647.315 F. par mois</b></string>
                                         </td>
-                                        <td><field name="ms70000mois1"/></td>
+                                        <td><field name="ms70000mois1" on_change="salaireotal"/></td>
                                         <td><field name="ms70000mois2"/></td>
                                         <td><field name="ms70000mois3"/></td>
                                     </tr>
@@ -84,7 +113,7 @@
                                         <td>
                                             <string position="center"><b>Mensuels supérieurs à 1.647.315 F. par mois</b></string>
                                         </td>
-                                        <td><field name="ms1647315mois1"/></td>
+                                        <td><field name="ms1647315mois1" on_change="salaireotal"/></td>
                                         <td><field name="ms1647315mois2"/></td>
                                         <td><field name="ms1647315mois3"/></td>
                                     </tr>
@@ -92,9 +121,9 @@
                                         <td>
                                             <string position="center"><b>TOTAL</b></string>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><field name="salaireotal"/></td>
+                                        <td><field name="regimetotal"/></td>
+                                        <td><field name="travailtotal"/></td>
                                     </tr>
 
                                 </table><br/>
@@ -191,10 +220,11 @@
                                     <br/>
                                     <br/>
                                </group>
-                    </form>
+                            </form>
                         </field>
                     </record>
                 <!-- fin de la vue form de cnps -->
+
                 <!-- La vue liste de cnps -->
                     <record model="ir.ui.view" id="cnps_tree">
                         <field name="name">cnps.tree</field>
@@ -214,15 +244,59 @@
                             </tree>
                         </field>
                     </record>
-                <!-- fin de la vue liste de cnps -->
 
-                     <record model="ir.actions.act_window" id="action_cnps"> 
+                    <record model="ir.actions.act_window" id="action_cnps"> 
                         <field name="name">cnps</field> 
                         <field name="res_model">declaration.cnps</field> 
                         <field name="view_type">form</field> 
                         <field name="view_mode">tree,form</field>
                     </record>
 
+                <!-- fin de la vue liste de cnps -->
+
+                <!-- debut de la vue du wizzard de cnps -->
+
+                    <record id="cnps_xls_form" model="ir.ui.view">
+                        <field name="name"> CNPS Xls Form</field>
+                        <field name="model">cnps.report.file</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <form string="Export CNPS file"  >
+                                <group>
+                                    <label string="Sauvegarder le ficher au format excel ' .'xls' ."/>
+                                    <field name='file_name' invisible="1"/>
+                                    <field name="file" readonly="1" filename="file_name" nolabel="1"/>
+                                </group>
+                                <footer>
+                                    <button string="Close" class="oe_highlight" special="cancel"/>
+                                </footer>
+                            </form>
+                        </field>
+
+                    </record>
+
+                <!-- fin de la vue du wizzard de cnps -->
+
+                <!-- dbut du raport cnps -->
+
+                        <record id="cnps_report_action" model="ir.actions.server">
+                              <field name="name">Telecharger la declaration excel de CNPS</field>
+                              <field name="type">ir.actions.server</field>
+                              <field name="model_id" ref="model_declaration_cnps"/>
+                              <field name="state">code</field>
+                              <field name="code">action = self.cnps_report_xls(cr, uid, context.get('active_ids'), context=context)</field>
+                        </record>
+                         <record id="cnps_reprot_action_view" model="ir.values">
+                            <field name="model_id" ref="model_declaration_cnps"/>
+                            <field name="name">Telecharger la declaration excel de CNPS</field>
+                            <field name="key2">client_action_multi</field>
+                            <field name="value" eval= "'ir.actions.server,' + str(ref('cnps_report_action'))"/>
+                            <field name="key">action</field>
+                            <field name="model">declaration.cnps</field>
+                        </record>
+                   <!-- fin du raport cnps -->
+        
+                     
        <!-- fin du module CNPS -->
 
 
@@ -360,6 +434,48 @@
                         <field name="view_mode">tree,form</field>
                     </record>
 
+                <!-- debut de la vue du wizzard de fdfp -->
+
+                    <record id="fdfp_xls_form" model="ir.ui.view">
+                        <field name="name"> FDFP Xls Form</field>
+                        <field name="model">fdfp.report.file</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <form string="Export fdfp file"  >
+                                <group>
+                                    <label string="Sauvegarder le ficher au format excel ' .'xls' ."/>
+                                    <field name='file_name' invisible="1"/>
+                                    <field name="file" readonly="1" filename="file_name" nolabel="1"/>
+                                </group>
+                                <footer>
+                                    <button string="Close" class="oe_highlight" special="cancel"/>
+                                </footer>
+                            </form>
+                        </field>
+
+                    </record>
+
+                <!-- fin de la vue du wizzard de fdfp -->
+
+                <!-- debut du raport fdfp -->
+
+                        <record id="fdfp_report_action" model="ir.actions.server">
+                              <field name="name">Telecharger la declaration excel de FDFP</field>
+                              <field name="type">ir.actions.server</field>
+                              <field name="model_id" ref="model_declaration_fdfp"/>
+                              <field name="state">code</field>
+                              <field name="code">action = self.fdfp_report_xls(cr, uid, context.get('active_ids'), context=context)</field>
+                        </record>
+                         <record id="fdfp_reprot_action_view" model="ir.values">
+                            <field name="model_id" ref="model_declaration_fdfp"/>
+                            <field name="name">Telecharger la declaration excel de FDFP</field>
+                            <field name="key2">client_action_multi</field>
+                            <field name="value" eval= "'ir.actions.server,' + str(ref('fdfp_report_action'))"/>
+                            <field name="key">action</field>
+                            <field name="model">declaration.fdfp</field>
+                        </record>
+                   <!-- fin du raport fdfp -->
+
        <!-- fin du module FDFP -->
 
        <!-- debut du module ITS -->
@@ -460,27 +576,24 @@
 
                                         </td>
                                         <td>
-                                            
+                                            <field name="montanttv1"/>
+                                        </td>
+                                        <td>
+                                            <field name="effectif1" />
+                                        </td>
+                                        <td>
+                                            <field name="montantexo1" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="montanttax1" />
+                                        </td>
+                                        <td>
+                                            <field name="abattement1" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni1" />
+                                        </td>
                                         
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                                                                  
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
                                     </tr>
                                      <tr>
                                         <td> 
@@ -495,27 +608,25 @@
 
                                         </td>
                                         <td>
-                                            
+                                            <field name="montanttv2"/>
                                         
                                         </td>
                                         <td>
-
+                                            <field name="effectif2" />
                                         </td>
                                         <td>
-                                                                                  
+                                            <field name="montantexo2" />                                    
                                         </td>
                                         <td>
+                                            <field name="montanttax2" />
+                                        </td>
+                                        <td>
+                                            <field name="abattement2" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni2" />
+                                        </td>
                                         
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
                                     </tr>
                                </table>
                             <br/><br/>
@@ -576,27 +687,25 @@
 
                                         </td>
                                         <td>
-                                            
+                                            <field name="montanttv3"/>
                                         
                                         </td>
                                         <td>
-
+                                            <field name="effectif3" />
                                         </td>
                                         <td>
-                                                                                  
+                                            <field name="montantexo3" />                                    
                                         </td>
                                         <td>
+                                            <field name="montanttax3" />
+                                        </td>
+                                        <td>
+                                            <field name="abattement3" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni3" />
+                                        </td>
                                         
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
                                     </tr>
                                      <tr>
                                         <td> 
@@ -611,27 +720,25 @@
 
                                         </td>
                                         <td>
-                                            
+                                            <field name="montanttv4"/>
                                         
                                         </td>
                                         <td>
-
+                                            <field name="effectif4" />
                                         </td>
                                         <td>
-                                                                                  
+                                            <field name="montantexo4" />                                    
                                         </td>
                                         <td>
+                                            <field name="montanttax4" />
+                                        </td>
+                                        <td>
+                                            <field name="abattement4" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni4" />
+                                        </td>
                                         
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
                                     </tr>
                                </table>
                                <group>
@@ -666,7 +773,7 @@
                                                     </string>
                                                 </td>
                                                 <td>
-                                                    
+                                                    <field name="montantrv" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -681,7 +788,7 @@
                                                     </string>
                                                 </td>
                                                 <td>
-                                                    
+                                                    <field name="montantan" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -696,7 +803,7 @@
                                                     </string>
                                                 </td>
                                                 <td>
-                                                    
+                                                    <field name="montanta" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -711,7 +818,7 @@
                                                     </string>
                                                 </td>
                                                 <td>
-                                                    
+                                                    <field name="montanttb" />
                                                 </td>
                                             </tr>
 
@@ -860,6 +967,509 @@
                                             </tr>
 
                                         </table>
+                                        <br/><br/>
+                                        <string>
+                                            <b>
+                                                03 - DETERMINATION DE L'IMPOT
+                                            </b>
+                                        </string>
+                                        <string>
+                                            <b>
+                                                03.1 - IMPOTS RETENUS SUR LES SALAIRES
+                                            </b>
+                                        </string>
+                                    <br/>
+                                <table width="100%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> N°</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Natrue des impôts</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Base Imposable</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Taux</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>14</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Impôt sur traitements,salaires,pensions,rentes viagères (IS)</b>
+                                            </string>
+
+                                        </td>
+                                        
+                                        <td>
+                                            <field name="base1" />
+                                        </td>
+                                        
+                                        <td>
+                                            <field name="tauximpot1" />
+                                        </td>
+                                        <td>
+                                            <field name="montantimpot1" />
+                                        </td> 
+                                    </tr>
+                                     <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>15</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Contribution nationale (CN)</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            <field name="base2" />
+                                        </td>
+                                        <td>
+                                            <field name="tauximpot2" />
+                                        </td>
+                                        <td>
+                                            <field name="montantimpot2" />
+                                        </td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>16</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Impôt général sur le revenu (IGR)</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            <field name="base3" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="tauximpot3" />
+                                        </td>
+                                        <td>
+                                            <field name="montantimpot3" />
+                                        </td>
+                                    </tr>
+                               </table>
+                               <table width="50%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> 17</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>TOTAL DES RETENUES AUX SALARIES</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <field name="totalrs" />
+                                            </td>
+                                    </tr>
+                               </table>
+                               <br/><br/>
+                               <string>
+                                    <b> 03.2- CONTRIBUTIONS A LA CHARGE DE L'EMPLOYEUR</b>
+                               </string>
+                               <br/>
+                                <table width="100%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> N°</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Natrue des impôts</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Catégorie de salariés</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Effectifs</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Revenu net imposable</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Taux</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>18</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Contribution Employeur (CE)</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Presonnel local (Régime général)</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <field name="effectife1" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni1" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="touxe1" />
+                                        </td>
+                                        <td>
+                                            <field name="montante1" />
+                                        </td>
+                                       
+                                    </tr>
+                                     <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>19</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Contribution Employeur (CE)</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Presonnel expatrié (Régime général)</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <field name="effectife2" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni2" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="touxe2" />
+                                        </td>
+                                        <td>
+                                            <field name="montante2" />
+                                        </td>
+                                       
+                                    </tr><tr>
+                                        <td> 
+                                              <string>
+                                                    <b>20</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Contribution Employeur (CE)</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Régime agricole</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <field name="effectife3" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni3" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="touxe3" />
+                                        </td>
+                                        <td>
+                                            <field name="montante3" />
+                                        </td>
+                                       
+                                    </tr><tr>
+                                        <td> 
+                                              <string>
+                                                    <b>21</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>CN</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Presonnel local (Régime général)</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <field name="effectife4" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni4" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="touxe4" />
+                                        </td>
+                                        <td>
+                                            <field name="montante4" />
+                                        </td>
+                                       
+                                    </tr><tr>
+                                        <td> 
+                                              <string>
+                                                    <b>22</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>CN</b>
+                                            </string>
+
+                                        </td>
+                                        <td>
+                                            <string>
+                                                <b>Presonnel expatrié (Régime général)</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <field name="effectife5" />
+                                        </td>
+                                        <td>
+                                            <field name="revenuni5" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="touxe5" />
+                                        </td>
+                                        <td>
+                                            <field name="montante5" />
+                                        </td>
+                                       
+                                    </tr>
+                               </table>
+
+                                <table width="50%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> 23</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>TOTAL DES CONTRIBUTIONS A LA CHARGE DE L’EMPLOYEUR</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <field name="totalcontribution" />
+                                            </td>
+                                    </tr>
+                               </table>
+                               <br/><br/>
+                               <string>
+                                    <b>03.3 - RETENUE SPECIFIQUE DU REGIME FORESTIER EN CAS DE FERMAGE</b>
+                                </string>
+
+                                <table width="100%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> N°</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Nature des impôts</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Revenu net imposable</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Taux</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Montant</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                     <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>24</b>
+                                                </string>
+                                        </td>                                  
+
+                                        <td>
+                                           <string>
+                                                    <b>Retenue sur le revenu des exploitants forestiers à titre de fermage</b>
+                                            </string>
+                                        </td>
+                                        <td>
+                                            <field name="revenunetimp" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="tauxre" />
+                                        </td>
+                                        <td>
+                                            <field name="montantretenu" />
+                                        </td>
+                                    </tr>
+                               </table>
+                                <br/><br/>
+                               <string>
+                                     <b> 03.4 - REGULARISATION</b>
+                               </string>
+
+                                <table width="100%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> N°</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Impôt sur salaires (IS)</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Contribution nationale (CN)</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Impôt général sur le revenu</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Contribution employeur (CE)</b>
+                                                </string>
+                                            </td>
+                                             <td>
+                                                <string>
+                                                    <b>Contribution nationale à la charge de l'employeur(CN)</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>Total régularisation</b>
+                                                </string>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td> 
+                                              <string>
+                                                    <b>25</b>
+                                                </string>                                  
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            <field name="impots"/>
+                                        
+                                        </td>
+                                        <td>
+                                            <field name="contributionn" />                                    
+                                        </td>
+                                        <td>
+                                            <field name="impotgsr" />
+                                        </td>
+                                        <td>
+                                            <field name="contributione" />
+                                        </td>
+                                        <td>
+                                            <field name="contributionnce" />
+                                        </td>
+                                         <td>
+                                            <field name="totalr" />
+                                        </td>
+                                    </tr>
+                               </table>
+
+                                <table width="35%" border="1">
+                                    <tr>
+                                            <td>
+                                                <string>
+                                                    <b> 26</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>MONTANT TOTAL A PAYER </b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <field name="montanttp" />
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                             <td>
+                                                <string>
+                                                    <b>27</b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <string>
+                                                    <b>MONTANT A REPORTER </b>
+                                                </string>
+                                            </td>
+                                            <td>
+                                                <field name="montantr" />
+                                            </td>
+                                    </tr>     
+                               </table>
                             </form>
                         </field>
                     </record>
@@ -875,14 +1485,12 @@
                                 <field name="dateits"/>
                                 <field name='periodiciteits'/>
                                 <field name='serviceits'/>
-                                <field name='nccits_id'/>
-                                <field name="sigleits_id"/>
-                                <field name='mailits_id'/>
-                                <field name='impositionits_id'/>
-                                <field name='bpits_id'/>
-                                <field name='rueits_id'/>
-                                <field name='bpits_id'/>
-                                <field name='bpits_id'/>
+                                <field name="montanttb" />
+                                <field name="totalrs" />
+                                <field name='totalcontribution'/>
+                                <field name="montanttp" />
+                                <field name="montantr" />
+                                
                             </tree>
                         </field>
                     </record>
@@ -893,6 +1501,49 @@
                         <field name="view_type">form</field>
                         <field name="view_mode">tree,form</field>
                     </record>
+
+            <!-- debut de la vue du wizzard de its -->
+
+                    <record id="its_xls_form" model="ir.ui.view">
+                        <field name="name"> ITS Xls Form</field>
+                        <field name="model">its.report.file</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <form string="Export its file"  >
+                                <group>
+                                    <label string="Sauvegarder le ficher au format excel ' .'xls' ."/>
+                                    <field name='file_name' invisible="1"/>
+                                    <field name="file" readonly="1" filename="file_name" nolabel="1"/>
+                                </group>
+                                <footer>
+                                    <button string="Close" class="oe_highlight" special="cancel"/>
+                                </footer>
+                            </form>
+                        </field>
+
+                    </record>
+
+                <!-- fin de la vue du wizzard de its -->
+
+                <!-- dbut du raport its -->
+
+                        <record id="its_report_action" model="ir.actions.server">
+                              <field name="name">Telecharger la declaration excel de ITS</field>
+                              <field name="type">ir.actions.server</field>
+                              <field name="model_id" ref="model_declaration_its"/>
+                              <field name="state">code</field>
+                              <field name="code">action = self.its_report_xls(cr, uid, context.get('active_ids'), context=context)</field>
+                        </record>
+                         <record id="its_reprot_action_view" model="ir.values">
+                            <field name="model_id" ref="model_declaration_its"/>
+                            <field name="name">Telecharger la declaration excel de ITS</field>
+                            <field name="key2">client_action_multi</field>
+                            <field name="value" eval= "'ir.actions.server,' + str(ref('its_report_action'))"/>
+                            <field name="key">action</field>
+                            <field name="model">declaration.its</field>
+                        </record>
+                   <!-- fin du raport its -->
+
         <!-- fin du mmodule ITS -->
 
         <!-- debut du module TSE -->
@@ -960,6 +1611,49 @@
                         <field name="view_type">form</field>
                         <field name="view_mode">tree,form</field>
                     </record>
+
+            <!-- debut de la vue du wizzard de tse -->
+
+                    <record id="tse_xls_form" model="ir.ui.view">
+                        <field name="name"> TSE Xls Form</field>
+                        <field name="model">tse.report.file</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <form string="Export tse file"  >
+                                <group>
+                                    <label string="Sauvegarder le ficher au format excel ' .'xls' ."/>
+                                    <field name='file_name' invisible="1"/>
+                                    <field name="file" readonly="1" filename="file_name" nolabel="1"/>
+                                </group>
+                                <footer>
+                                    <button string="Close" class="oe_highlight" special="cancel"/>
+                                </footer>
+                            </form>
+                        </field>
+
+                    </record>
+
+                <!-- fin de la vue du wizzard de tse -->
+
+                <!-- dbut du raport tse -->
+
+                        <record id="tse_report_action" model="ir.actions.server">
+                              <field name="name">Telecharger la declaration excel de TSE</field>
+                              <field name="type">ir.actions.server</field>
+                              <field name="model_id" ref="model_declaration_tse"/>
+                              <field name="state">code</field>
+                              <field name="code">action = self.tse_report_xls(cr, uid, context.get('active_ids'), context=context)</field>
+                        </record>
+                         <record id="tse_reprot_action_view" model="ir.values">
+                            <field name="model_id" ref="model_declaration_tse"/>
+                            <field name="name">Telecharger la declaration excel de TSE</field>
+                            <field name="key2">client_action_multi</field>
+                            <field name="value" eval= "'ir.actions.server,' + str(ref('tse_report_action'))"/>
+                            <field name="key">action</field>
+                            <field name="model">declaration.tse</field>
+                        </record>
+                   <!-- fin du raport tse -->
+
          <!-- fin du module TSE -->
 
          <!--debut du module tva -->
@@ -1080,13 +1774,58 @@
                             </tree>
                         </field>
                     </record>
-            <!-- fin de la vue liste de tva -->
+                <!-- fin de la vue liste de tva -->
                      <record model="ir.actions.act_window" id="action_tva">
                         <field name="name">tva</field>
                         <field name="res_model">declaration.tva</field>
                         <field name="view_type">form</field>
                         <field name="view_mode">tree,form</field>
                     </record>
+
+
+
+                <!-- debut de la vue du wizzard de tva -->
+
+                    <record id="tva_xls_form" model="ir.ui.view">
+                        <field name="name"> TVA Xls Form</field>
+                        <field name="model">tva.report.file</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <form string="Export tva file"  >
+                                <group>
+                                    <label string="Sauvegarder le ficher au format excel ' .'xls' ."/>
+                                    <field name='file_name' invisible="1"/>
+                                    <field name="file" readonly="1" filename="file_name" nolabel="1"/>
+                                </group>
+                                <footer>
+                                    <button string="Close" class="oe_highlight" special="cancel"/>
+                                </footer>
+                            </form>
+                        </field>
+
+                    </record>
+
+                <!-- fin de la vue du wizzard de tva -->
+
+                <!-- dbut du raport tva -->
+
+                        <record id="tva_report_action" model="ir.actions.server">
+                              <field name="name">Telecharger la declaration excel de TVA</field>
+                              <field name="type">ir.actions.server</field>
+                              <field name="model_id" ref="model_declaration_tva"/>
+                              <field name="state">code</field>
+                              <field name="code">action = self.tva_report_xls(cr, uid, context.get('active_ids'), context=context)</field>
+                        </record>
+                         <record id="tva_reprot_action_view" model="ir.values">
+                            <field name="model_id" ref="model_declaration_tva"/>
+                            <field name="name">Telecharger la declaration excel de TVA</field>
+                            <field name="key2">client_action_multi</field>
+                            <field name="value" eval= "'ir.actions.server,' + str(ref('tva_report_action'))"/>
+                            <field name="key">action</field>
+                            <field name="model">declaration.tva</field>
+                        </record>
+                   <!-- fin du raport tva -->
+
          <!-- fin du module tva -->
 
          <!-- debut du module etat -->
@@ -1115,86 +1854,36 @@
                                     <field name='totaletat'/>
                                 </group>
                                </group>
-                               <table width="100%" border="1">
-                                    <tr>
-                                            <td>
-                                                <string>
-                                                    <b> Date de la facture ou de l'importation</b>
-                                                </string>
-                                            </td>
-                                            <td>
-                                                <string>
-                                                    <b> FOURNISSEUR NOM ET PRENOMS</b>
-                                                </string>
-                                            </td>
-                                            <td>
-                                                <string>
-                                                    <b> FOURNISSEUR N° C. C.</b>
-                                                </string>
-                                            </td>
-                                             <td>
-                                                <string>
-                                                    <b> REFERENCE DE LA FACTURE OU N° DE LA DECLARATION ET DE LA LIQUIDATION EN DOUANE</b>
-                                                </string>
-                                            </td>
-                                            <td>
-                                                <string>
-                                                    <b> NATURE DES BIENS OU SERVICES (ouvrant droit à déduction)</b>
-                                                </string>
-                                            </td>
-                                            <td>
-                                                <string>
-                                                    <b>MONTANT TOTAL</b>
-                                                </string>
-                                            </td>
-                                             <td>
-                                                <string>
-                                                    <b> MONTANT DE LA TAXE</b>
-                                                </string>
-                                            </td>
-                                            <td>
-                                                <string>
-                                                    <b>PRORATA DE DEDUCTION</b>
-                                                </string>
-                                            </td>
-                                            <td>
-                                                <string>
-                                                    <b> MONTANT DE LA TAXE DEDUCTIBLE</b>
-                                                </string>
-                                            </td>
-                                    </tr>
-                                    <tr>
-                                        <td> 
-                                            <field name="datefactetat"/>
-                                        </td>
-                                        <td>
-                                            <field name="fournisseurnccetat"/>
-                                        </td>
-                                        <td>
-                                            <field name='referencefactetat'/> 
-                                        
-                                        </td>
-                                        <td>
-                                            <field name="fournisseurnpetat"/>
-                                        </td>
-                                        <td>
-                                             <field name="naturebienetat"/>
-                                        </td>
-                                        <td>
-                                            <field name='montantttetat'/>
-                                        </td>
-                                        <td>
-                                            <field name='montanttaxetat'/>
-                                        </td>
-                                        <td>
-                                            <field name='prorataetat'/>
-                                        </td>
-                                        <td>
-                                            <field name='montanttdetat'/>
-
-                                        </td>
-                                    </tr>
-                               </table>
+                               <notebook >
+                                    <page string="Ajout d'element des états de taxes deductibles">
+                                        <field name="elementetat" colspan="4" nolabel="1">
+                                            <tree string="Order lines" editable="bottom">
+                                                 <field name='datefactetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='fournisseurnpetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='fournisseurnccetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='referencefactetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name= 'naturebienetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='montantttetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='montanttaxetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='prorataetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='montanttdetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                            </tree>
+                                            <form string="Order lines">
+                                                <group col="4">
+                                                    <field name='datefactetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='fournisseurnpetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='fournisseurnccetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='referencefactetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name= 'naturebienetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='montantttetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='montanttaxetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='prorataetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                    <field name='montanttdetat' on_change="(datefactetat,  fournisseurnccetat, fournisseurnpetat, naturebienetat, montantttetat, montanttaxetat, prorataetat, montanttdetat, referencefactetat, context)"/>
+                                                </group>
+                                            </form>
+                                        </field>
+                                    </page>
+                               </notebook>
                            </form>
                         </field>
                     </record>
@@ -1224,17 +1913,94 @@
                         <field name="view_mode">tree,form</field>
                     </record>
 
-       <!-- fin du module etat -->
+                <!-- debut de la vue du wizzard de etat -->
+
+                    <record id="etat_xls_form" model="ir.ui.view">
+                        <field name="name"> ETAT Xls Form</field>
+                        <field name="model">etat.report.file</field>
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <form string="Export ETAT file"  >
+                                <group>
+                                    <label string="Sauvegarder le ficher au format excel ' .'xls' ."/>
+                                    <field name='file_name' invisible="1"/>
+                                    <field name="file" readonly="1" filename="file_name" nolabel="1"/>
+                                </group>
+                                <footer>
+                                    <button string="Close" class="oe_highlight" special="cancel"/>
+                                </footer>
+                            </form>
+                        </field>
+
+                    </record>
+
+                <!-- fin de la vue du wizzard de etat -->
+
+                <!-- dbut du raport etat -->
+
+                        <record id="etat_report_action" model="ir.actions.server">
+                              <field name="name">Telecharger la declaration excel d'etat des taxes deductibles</field>
+                              <field name="type">ir.actions.server</field>
+                              <field name="model_id" ref="model_declaration_cnps"/>
+                              <field name="state">code</field>
+                              <field name="code">action = self.etat_report_xls(cr, uid, context.get('active_ids'), context=context)</field>
+                        </record>
+                         <record id="etat_reprot_action_view" model="ir.values">
+                            <field name="model_id" ref="model_declaration_etat"/>
+                            <field name="name">Telecharger la declaration excel d'etat des taxes deductibles</field>
+                            <field name="key2">client_action_multi</field>
+                            <field name="value" eval= "'ir.actions.server,' + str(ref('etat_report_action'))"/>
+                            <field name="key">action</field>
+                            <field name="model">declaration.etat</field>
+                        </record>
+                <!-- fin du raport etat -->
+
+            <!-- fin du module etat -->
 
 
-        <menuitem id="declaration" name="declaration_ci"/>
-           <menuitem name="declaration_ci" id="section_main_menu_declaration" parent="declaration" sequence=""/>
-            <menuitem name="cnps" id="choix_cnps" parent="section_main_menu_declaration" action="action_cnps"/>
-             <menuitem name="fdfp" id="choix_fdfp" parent="section_main_menu_declaration" action="action_fdfp"/>
-            <menuitem name="its" id="choix_its" parent="section_main_menu_declaration" action="action_its"/>
-            <menuitem name="tse" id="choix_tse" parent="section_main_menu_declaration" action="action_tse"/>
-            <menuitem name="tva" id="choix_tva" parent="section_main_menu_declaration" action="action_tva"/>
-            <menuitem name="etat" id="choix_etat" parent="section_main_menu_declaration" action="action_etat"/>
+            <!-- debut des elements d'etat -->
+
+                <!-- debut de la form element etat -->
+                    <record model="ir.ui.view" id="elementetat_form"> 
+                        <field name="name">elementetat.form</field> 
+                        <field name="model">declaration.elementetat</field> 
+                        <field name="type">form</field> 
+                        <field name="arch" type="xml">
+                            <form string=" FORM  DES ELEMENTS D'ETAT DES TAXES DEDUCTIBLES"  >
+                                <group>
+                                    <field name="datefactetat"/>
+                                    <field name="fournisseurnccetat"/>
+                                    <field name='referencefactetat'/> 
+                                    <field name="fournisseurnpetat"/>
+                                    <field name="naturebienetat"/>
+                                    <field name='montantttetat'/>
+                                    <field name='montanttaxetat'/>
+                                    <field name='prorataetat'/>
+                                    <field name='montanttdetat'/>
+                            </group>
+                           </form>
+                        </field>
+                    </record>
+            <!-- debut de la form element etat -->
+            
+
+        <menuitem id="declaration" name="Déclarartion CI"/>
+           <menuitem name="DECLARATION CI" id="section_main_menu_declaration" parent="declaration" sequence=""/>
+
+            <menuitem name="CNPS" id="choix_cnps" parent="section_main_menu_declaration" action="action_cnps"/>
+              
+            <menuitem name="FDFP" id="choix_fdfp" parent="section_main_menu_declaration" action="action_fdfp"/>
+              
+            <menuitem name="TIS" id="choix_its" parent="section_main_menu_declaration" action="action_its"/>
+              
+            <menuitem name="TSE" id="choix_tse" parent="section_main_menu_declaration" action="action_tse"/>
+              
+            <menuitem name="TVA" id="choix_tva" parent="section_main_menu_declaration" action="action_tva"/>
+              
+            <menuitem name="ETATS DES TAXES DEDUCTIBLES" id="choix_etat" parent="section_main_menu_declaration" action="action_etat"/>
+              
+              
+
 
     </data>
 </openerp>
