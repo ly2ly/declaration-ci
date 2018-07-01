@@ -1,3 +1,5 @@
 # importation des repertoires contenant un fichier python
 
-import objects
+import models
+import reports
+import wizard
